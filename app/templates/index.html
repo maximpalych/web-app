@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Upcoming Events (Next 7 Days)</h2>
+<ul>
+    {% if upcoming_events %}
+        {% for event in upcoming_events %}
+        <li>
+            <strong>{{ event.title }}</strong> - {{ event.date }}
+        </li>
+        {% endfor %}
+    {% else %}
+        <p>No upcoming events in the next 7 days.</p>
+    {% endif %}
+</ul>
+
+<h2>Top 5 Tasks</h2>
+<ul>
+    {% if tasks %}
+        {% for task in tasks %}
+        <li>
+            <span class="{% if task.is_completed %}completed{% endif %}">
+                {{ task.content }}
+            </span>
+        </li>
+        {% endfor %}
+    {% else %}
+        <p>No tasks available.</p>
+    {% endif %}
+</ul>
+
+<div class="info-bubbles">
+    <div class="bubble weather-bubble">
+        {% if weather %}
+            <p><strong>{{ weather.location }}</strong></p>
+            <p>{{ weather.temperature }}°C</p>
+            <p>{{ weather.condition }}</p>
+        {% else %}
+            <p>Weather unavailable</p>
+        {% endif %}
+    </div>
+
+    <div class="bubble exchange-bubble">
+        {% if exchange_rates %}
+            <p><strong>Exchange Rates</strong></p>
+            <ul>
+                {% for currency, rate in exchange_rates.items() %}
+                <li>{{ currency }}: {{ rate }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Exchange rates unavailable</p>
+        {% endif %}
+    </div>
+</div>
+
+<form action="{{ url_for('main.generate_test_data') }}" method="get">
+    <button type="submit" class="btn btn-primary">Generate Test Data</button>
+</form>
+{% endblock %}

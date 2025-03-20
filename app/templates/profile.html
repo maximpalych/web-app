@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>{{ user.username }}</h1>
+    
+    <div class="avatar">
+        <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="User Avatar" width="150" height="150">
+    </div>
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+        <label for="avatar">Upload new avatar:</label>
+        <input type="file" name="avatar" id="avatar" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+    <form method="POST" action="{{ url_for('main.change_email') }}" class="change-email-form">
+        <h2>Change Email</h2>
+        <label for="new_email">New Email:</label>
+        <input type="email" name="new_email" id="new_email" required>
+        <button type="submit">Change Email</button>
+    </form>
+    <form method="POST" action="{{ url_for('main.change_password') }}" class="change-password-form">
+        <h2>Change Password</h2>
+        <label for="current_password">Current Password:</label>
+        <input type="password" name="current_password" id="current_password" required>
+        
+        <label for="new_password">New Password:</label>
+        <input type="password" name="new_password" id="new_password" required>
+        
+        <label for="confirm_password">Confirm New Password:</label>
+        <input type="password" name="confirm_password" id="confirm_password" required>
+        
+        <button type="submit">Change Password</button>
+    </form>
+    <div class="button">
+        <a href="{{ url_for('main.index') }}" class="button">Back</a>
+    </div>
+</div>
+{% endblock %}

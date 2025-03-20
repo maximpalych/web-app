@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Planner{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('main.todo') }}">To-Do List</a>
+            <a href="{{ url_for('main.calendar') }}">Calendar</a>
+            <a href="{{ url_for('main.notes') }}">Notes</a>
+        </div>
+        <div class="nav-actions">
+            {% if current_user.is_authenticated %}
+                <!-- Кнопка с аватаркой -->
+                <a href="{{ url_for('main.profile') }}" class="profile-avatar">
+                    <img src="{{ url_for('static', filename='uploads/' + (current_user.avatar or 'default.jpg')) }}" alt="Profile Avatar">
+                </a>
+                <a href="{{ url_for('auth.logout') }}" class="logout-button">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Обработка сообщений flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="flash-message {{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Основной контент -->
+    <div class="container {% if request.endpoint == 'main.calendar' %}full-width{% endif %}">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+</body>
+</html>
