@@ -370,7 +370,7 @@ def generate_test_users():
 
 
             user = User.query.filter_by(username=username).first()
-            for _ in range(10):
+            for _ in range(20):
                 task_content = fake.sentence(nb_words=30)
                 new_task = Task(content=task_content, user_id=user.id)
                 db.session.add(new_task)
@@ -383,14 +383,14 @@ def generate_test_users():
                 db.session.add(new_event)
 
             categories = ["Work", "Personal", "Urgent", "General"]
-            for _ in range():
+            for _ in range(47):
                 event_title = fake.sentence(nb_words=4)
                 event_date = fake.date_this_year()
                 event_category = choice(categories)
                 new_event = Event(title=event_title, date=event_date, category=event_category, user_id=user.id)
                 db.session.add(new_event)
 
-            for _ in range(10):
+            for _ in range(20):
                 note_title = fake.sentence(nb_words=5)
                 note_content = fake.paragraph(nb_sentences=30)
                 new_note = Note(title=note_title, content=note_content, user_id=user.id)

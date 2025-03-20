@@ -11,7 +11,6 @@ bcrypt = Bcrypt()
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'app\\static\\uploads\\')  # Папка для загрузки аватарок
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Разрешенные форматы файлов
-print(f"#################################3 {os.getcwd()}")
 
 def create_app():
     app = Flask(__name__)
